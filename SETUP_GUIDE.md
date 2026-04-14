@@ -1,208 +1,92 @@
-# Setup & Run Guide
+# 🚀 Setup Guide: CollabTasks Elite
 
-## Prerequisites
+Welcome to the mission control for CollabTasks Elite. Follow these instructions to ignite the engine and experience the God-Level SaaS interface.
 
-- Python 3.9+
-- Node.js 16+
-- Git
+---
 
-## Quick Start (5 minutes)
+## 🛠️ Prerequisites
+- **Python 3.10+**: The neural engine.
+- **Node.js 18+**: The visual surface.
+- **Git**: Version control for excellence.
 
-### Backend Setup
+---
+
+## ⚡ Quick Ignition (5 Minutes)
+
+### 1. The Neural Engine (Backend)
 
 ```bash
 cd backend
 
-# Create virtual environment
+# Create the virtual isolation layer
 python -m venv venv
-source venv/bin/activate  # Windows: venv\Scripts\activate
+source venv/bin/activate  # Windows: venv\\Scripts\\activate
 
-# Install dependencies
+# Install the dependencies of distinction
 pip install -r requirements.txt
 
-# Initialize database
+# Initialize the Divine Database
 python -c "from database import init_db, get_database_url; init_db(get_database_url())"
 
-# Run tests (verify everything works)
+# Execute system validation (Testing Integrity)
 pytest -v
 
-# Start server
+# Ignite the Flask engine
 python app.py
-# Server runs on http://localhost:5000
+# API is live on http://localhost:5000
 ```
 
-### Frontend Setup (in a new terminal)
+### 2. The Visual Surface (Frontend)
 
 ```bash
 cd frontend
 
-# Install dependencies
+# Install the surface components
 npm install
 
-# Start development server
+# Orchestrate the development server
 npm start
-# App runs on http://localhost:3000 (opens automatically)
+# Aesthetic experience live on http://localhost:3000
 ```
-
-## Using the Application
-
-### Create Test Accounts
-
-**Account 1 (Admin):**
-- Email: `admin@example.com`
-- Password: `password123`
-
-**Account 2 (Team Member):**
-- Email: `member@example.com`
-- Password: `password123`
-
-### Demo Flow
-
-1. **Register & Login**
-   - Register with admin account
-   - Login and see dashboard
-
-2. **Create Workspace**
-   - Click "Create a Workspace"
-   - Name it: "Q4 Planning"
-   - Open the workspace
-
-3. **Create Tasks**
-   - Add task: "Design new feature"
-   - Add task: "Review PRs"
-   - Add task: "Deploy to staging"
-   - Update statuses to see changes
-
-4. **Invite Team Member**
-   - Click "Invite Member"
-   - Invite: `member@example.com` as "member"
-   - Verify they appear in team list
-
-5. **Collaborate**
-   - Open a task
-   - Add comment: "Great idea! Let's discuss this tomorrow"
-   - Update task status
-   - See comments persist
-
-6. **Login as Team Member**
-   - Open new incognito window
-   - Login with member account
-   - Verify you can see the workspace and tasks
-   - Try to delete a task (should be denied)
-
-## Running Tests
-
-```bash
-# All tests
-pytest backend/ -v
-
-# With coverage
-pytest backend/ --cov=. --cov-report=html
-
-# Specific test file
-pytest backend/tests/test_auth.py -v
-
-# Specific test
-pytest backend/tests/test_auth.py::TestAuthService::test_hash_password -v
-```
-
-**Expected results:**
-- 46+ tests passing
-- 85%+ code coverage
-- All permission checks verified
-
-## Stopping Services
-
-```bash
-# Backend: Press Ctrl+C
-# Frontend: Press Ctrl+C
-
-# Clean up database
-rm backend/collab_tasks.db
-```
-
-## Troubleshooting
-
-### Backend won't start
-```bash
-# Make sure port 5000 is free
-lsof -i :5000  # Check what's using it
-# Or change port in app.py
-```
-
-### Frontend shows "Cannot connect to API"
-```bash
-# Make sure backend is running
-# Check REACT_APP_API_URL in frontend/.env
-# Verify it's http://localhost:5000
-```
-
-### Tests failing
-```bash
-# Make sure you're in backend/ directory
-cd backend
-
-# Check Python version (3.9+)
-python --version
-
-# Reinstall dependencies
-rm -rf venv
-python -m venv venv
-source venv/bin/activate
-pip install -r requirements.txt
-
-# Run tests again
-pytest -v
-```
-
-### Database locked
-```bash
-# SQLite locks during tests - usually temporary
-# Restart the application
-
-# Or manually remove database
-rm backend/collab_tasks.db
-python -c "from database import init_db, get_database_url; init_db(get_database_url())"
-```
-
-## Production Notes
-
-For production deployment:
-
-```bash
-# Backend
-export DATABASE_URL="postgresql://user:pass@host/db"
-export JWT_SECRET_KEY="your-random-secret-key-here"
-export FLASK_ENV="production"
-python app.py
-
-# Frontend
-npm run build
-# Deploy build/ directory to CDN or static server
-# Update REACT_APP_API_URL to production API URL
-```
-
-## Documentation
-
-- **README.md** — Full project documentation
-- **ARCHITECTURE.md** — System design and decisions
-- **SYSTEM_CONSTRAINTS.md** — AI guidance and code rules
-- **WALKTHROUGH_SCRIPT.md** — Video presentation guide
-
-## Next Steps
-
-1. ✅ Clone/extract repository
-2. ✅ Follow backend setup above
-3. ✅ Follow frontend setup above
-4. ✅ Run `pytest backend/ -v` to verify tests pass
-5. ✅ Follow demo flow above
-6. ✅ Record walkthrough video using WALKTHROUGH_SCRIPT.md
-7. ✅ Submit to assessments@bettrsw.com
-
-Subject: "Associate Software Engineer - Satwik - Assessment"
 
 ---
 
-**Total setup time:** ~5 minutes  
-**Demo time:** ~5 minutes  
-**Walkthrough video:** 10-15 minutes
+## 💎 The Elite Demo Flow
+
+Experience the system through the lens of a power user:
+
+1.  **Register & Transcend**: Create an account with an email that matters.
+2.  **Ignite Workspace**: Form a new Nexus (Workspace) named "Elite Operations."
+3.  **Achievement Unit Creation**: Add tasks like "Glassmorphism UI Refinement" and "Backend Integrity Audit."
+4.  **Synergy Invite**: Invite a teammate (`member@example.com`) as a "Member" and witness the permission hierarchy in action.
+5.  **Achieve & Reflect**: Move tasks through the states of achievement and add insights via the comment system.
+
+---
+
+## 🧪 System Integrity Validation
+
+We don't hope; we verify.
+
+```bash
+# Full system audit
+pytest backend/ -v
+
+# Depth analysis (Coverage)
+pytest backend/ --cov=. --cov-report=html
+```
+
+---
+
+## 🛰️ Navigation Matrix
+
+- **[README.md](file:///c:/Users/satwi/Downloads/collab-tasks-assessment/collab-tasks/README.md)**: Executive Overview.
+- **[ARCHITECTURE.md](file:///c:/Users/satwi/Downloads/collab-tasks-assessment/collab-tasks/ARCHITECTURE.md)**: Inner Workings.
+- **[API_REFERENCE.md](file:///c:/Users/satwi/Downloads/collab-tasks-assessment/collab-tasks/API_REFERENCE.md)**: Developer Bible.
+- **[SYSTEM_CONSTRAINTS.md](file:///c:/Users/satwi/Downloads/collab-tasks-assessment/collab-tasks/SYSTEM_CONSTRAINTS.md)**: Laws of Excellence.
+
+---
+
+**Built for Speed. Documented for Precision.**
+
+---
+[Return to README](file:///c:/Users/satwi/Downloads/collab-tasks-assessment/collab-tasks/README.md)

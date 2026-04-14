@@ -1,191 +1,95 @@
-# System Constraints & AI Guidance
+# 🛡️ System Constraints: The Elite Directives
 
-## Purpose
-This document constrains AI behavior and protects system integrity during development. All generated code must be reviewed against these rules.
-
----
-
-## Core Principles
-
-### 1. Simplicity Over Cleverness
-- ❌ Complex patterns, decorators, metaclasses
-- ✅ Straightforward conditionals, loops, explicit calls
-- ✅ Code that reads like the problem domain
-- Rationale: Collaborative todo apps are inherently simple; complexity hides bugs
-
-### 2. Defensive by Default
-- All user inputs validated at API boundary (not trusted)
-- Database constraints enforced (unique, NOT NULL, foreign keys)
-- Invalid state prevention > error handling
-- Validation errors returned clearly to client
-- Rationale: Prevent corruption before it happens
-
-### 3. Explicit Over Implicit
-- No magic (no ORM auto-joins, no implicit cascades)
-- SQL queries written explicitly or via ORM with explicit load strategy
-- All side effects visible in function signatures
-- Rationale: Easy to audit and extend
-
-### 4. Types & Schemas as Guards
-- Python: Use type hints on every function
-- Database: Proper schemas with constraints
-- API: Request/response schemas validated
-- Rationale: Catch mistakes at compile/validation time
-
-### 5. Change Resilience
-- Decisions made at layers (don't scatter permissions logic everywhere)
-- Dependencies flow one direction (never circular)
-- Tests prove new code doesn't break old behavior
-- Rationale: New features shouldn't ripple through codebase
+## 🌌 Purpose
+This document provides the mathematical and logical boundaries that preserve the integrity of **CollabTasks Elite**. All development, whether by human or AI, must adhere to these laws.
 
 ---
 
-## Code Generation Rules (for AI)
+## 🏛️ Core Architectural Directives
 
-### Backend (Flask + Python)
+### 1. The Simplification Law
+- **Directive**: Eliminate complexity at the source.
+- **Rule**: No decorators, metaclasses, or "magic" abstractions.
+- **Outcome**: Code that is immediately understandable, auditable, and resilient.
+- **Rationale**: Complexity is the graveyard of security.
 
-**DO:**
-- Generate boilerplate (models, schemas, routes) with type hints
-- Use SQLAlchemy ORM for schema definition and basic queries
-- Validate ALL inputs with clear error messages
-- Write explicit SQL for complex queries
-- Use descriptive variable names matching domain language
-- Include docstrings explaining non-obvious logic
-- Generate test cases that prove correctness
+### 2. The Defensive Doctrine
+- **Directive**: Assume all external data is hostile.
+- **Rule**: Validate 100% of inputs at the API boundary using strict Schemas.
+- **Constraint**: Database integrity is enforced via `NOT NULL`, `UNIQUE`, `FK`, and `CHECK` constraints.
+- **Rationale**: Corruption is prevented, never just "handled."
 
-**DON'T:**
-- Use decorators/metaclasses for logic (use explicit functions)
-- Generate implicit behavior (auto-cascade deletes, hidden side effects)
-- Assume user input is safe
-- Write clever one-liners (clarity > brevity)
-- Generate routes without validating request structure
-- Skip error handling for invalid states
+### 3. The Explicit Identity
+- **Directive**: Visibility over transparency.
+- **Rule**: All side effects must be visible in function signatures. No implicit auto-joins or cascades.
+- **Outcome**: A deterministic system where every action has a clear cause and effect.
 
-### Frontend (React)
-
-**DO:**
-- Generate component hierarchy matching data structure
-- Use React hooks (useState, useContext) explicitly
-- Validate form inputs before submission
-- Show clear error states and user feedback
-- Use prop types or TypeScript for component contracts
-- Generate loading/error/success UI states
-
-**DON'T:**
-- Generate implicit state management (use explicit context/hooks)
-- Trust API responses without validation
-- Skip error handling
-- Create deeply nested components (break into smaller pieces)
-
-### Database
-
-**DO:**
-- Define schemas with constraints (NOT NULL, UNIQUE, FK)
-- Use foreign keys with explicit CASCADE/RESTRICT
-- Index on foreign keys and frequently filtered columns
-- Write migration scripts for schema changes
-
-**DON'T:**
-- Store computed values (calculate on read)
-- Skip NOT NULL constraints
-- Use implicit enum handling (store explicit strings with CHECK constraints)
+### 4. The Layered Sovereignty
+- **Directive**: Strict separation of concerns.
+- **Boundary 1**: **API** (Validation & Auth).
+- **Boundary 2**: **Service** (Domain Logic & Purity).
+- **Boundary 3**: **Model** (Schema & Persistence).
+- **Law**: Dependencies flow inward. No circular imports. No service logic in routes.
 
 ---
 
-## Architecture Rules
+## 🎨 Visual & UX Standards (God-Level UI)
 
-### Boundaries
-1. **API Layer** — Validates all inputs, returns HTTP + JSON
-2. **Business Logic** — Pure logic, no database access (testable)
-3. **Data Layer** — Database access only, no business rules
-4. **Models** — Define domain (Task, User, Collaboration)
+For CollabTasks Elite, aesthetics are a functional requirement.
 
-### Ownership
-- Each route owns its validation
-- Each model owns its constraints
-- Tests own proving correctness
+### 1. The Glassmorphism Standard
+- **Required**: Use `backdrop-filter: blur()` and semi-transparent backgrounds for primary containers.
+- **Required**: Subtle borders (1px solid rgba) to define depth.
 
-### Forbidden Patterns
-- ❌ Database logic in routes
-- ❌ Business logic in database queries
-- ❌ Validation split across layers
-- ❌ Circular dependencies
+### 2. The Dark Mode Orchestration
+- **Palette**: Use curated dark HSL values. Avoid `#000` (pure black) unless for deep shadows.
+- **Contrast**: Maintain WCAG AA standards while preserving the "Calm Tech" vibe.
+
+### 3. The Motion Law
+- **Directive**: Interaction must feel alive.
+- **Rule**: Every user action (hover, click, state change) must have a micro-animation (e.g., scale(1.02), opacity shift).
+- **Timing**: Use `cubic-bezier` for professional, non-linear easing.
 
 ---
 
-## Testing Requirements
+## 🧪 Testing & Integrity Mandates
 
-Every feature must have tests proving:
-1. Happy path works correctly
-2. Invalid inputs are rejected
-3. Permissions/auth are enforced
-4. New feature doesn't break existing behavior
+### 1. Proactive Verification
+- Every new feature MUST have a corresponding test suite BEFORE being merged.
+- **Happy Path**: Verifies achievement.
+- **Sad Path**: Verifies rejection of invalidity.
+- **Guard Path**: Verifies permission enforcement.
 
-**Test Coverage Minimum:**
-- API routes: 80%+
-- Business logic: 90%+
-- Database models: 100% (constraints, relationships)
-
----
-
-## AI Usage Review Checklist
-
-**Before accepting AI-generated code:**
-- [ ] Type hints present on all functions
-- [ ] Input validation explicit and clear
-- [ ] No implicit behavior
-- [ ] Database constraints enforced
-- [ ] Error paths tested
-- [ ] Code reads naturally (not clever)
-- [ ] No security vulnerabilities
-- [ ] Tests provided and passing
+### 2. Coverage Minimums
+- **Routes**: 85%+
+- **Services**: 95%+
+- **Models**: 100%
 
 ---
 
-## Risks & Mitigations
+## 🤖 AI Collaboration Guardrails
 
-| Risk | Mitigation |
-|------|-----------|
-| Scope creep (too many features) | Build core features only; document extensions |
-| AI generates untested code | Every generated function must have tests |
-| Implicit bugs from AI | Code review + type checking + tests |
-| Permissions not enforced | Test every permission check explicitly |
-| Database corruption | Constraints prevent invalid states |
-
----
-
-## Extension Strategy
-
-When adding new features:
-1. **Identify the boundary** — Which layer does it touch?
-2. **Write tests first** — Prove the behavior before code
-3. **Add schema changes** — Migrations with constraints
-4. **Implement business logic** — Separate from routes
-5. **Add routes** — Validate and delegate to logic
-6. **Verify resilience** — Existing tests still pass
-
-This prevents feature sprawl and keeps complexity manageable.
+When generating code for this system, the AI must:
+- [ ] Use explicit type hints for ALL function arguments and return types.
+- [ ] Ensure every database migration includes appropriate constraints.
+- [ ] Verify permission checks are visible and correct in the route logic.
+- [ ] Utilize the Design System's defined color tokens and utility classes.
+- [ ] **NEVER** skip error handling for "convenience."
 
 ---
 
-## Questions to Ask AI During Development
+## ⚔️ Risk & Mitigation Matrix
 
-- "Is this the simplest way to solve this?"
-- "What could go wrong with this input?"
-- "Does this enforce the constraint at the database level?"
-- "Could this change break existing behavior?"
-- "Are all error cases tested?"
+| Potential Fracture | Defensive Layer | Mitigation Outcome |
+| :--- | :--- | :--- |
+| **Input Injection** | Strict Schema Validation | Rejection at Boundary |
+| **State Corruption** | DB Constraints / Transactions | Atomic Consistency |
+| **Logic Regression** | Automated PyTest Suite | Immediate Failure Visibility |
+| **Visual Decay** | Design System Constraint Enforcement | Premium Continuity |
 
 ---
 
-## Evaluation Alignment
+**Follow these laws to preserve excellence. Violate them and introduce entropy.**
 
-These constraints directly support the evaluation criteria:
-- **Structure:** Clear boundaries and layering
-- **Simplicity:** Explicit code, no magic
-- **Correctness:** Validation + constraints prevent invalid states
-- **Interface Safety:** Schemas and validation guard APIs
-- **Change Resilience:** Tests prove new code doesn't break old
-- **Verification:** Automated tests + type hints
-- **Observability:** Clear errors, explicit logic
-- **AI Guidance:** This document guides all code generation
+---
+[Return to README](file:///c:/Users/satwi/Downloads/collab-tasks-assessment/collab-tasks/README.md)

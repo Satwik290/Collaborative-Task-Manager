@@ -137,6 +137,8 @@ class CreateTaskRequest:
     """POST /api/workspaces/:id/tasks"""
     title: str
     description: Optional[str]
+    priority: Optional[str]
+    due_date: Optional[str]
     assigned_to: Optional[int]
     
     @staticmethod
@@ -147,6 +149,8 @@ class CreateTaskRequest:
         
         title = data.get("title", "").strip()
         description = data.get("description", "").strip() if data.get("description") else None
+        priority = data.get("priority", "medium").strip().lower()
+        due_date = data.get("due_date")
         assigned_to = data.get("assigned_to")
         
         if not title:
@@ -157,10 +161,19 @@ class CreateTaskRequest:
         if description and len(description) > 2000:
             return None, "description must be less than 2000 characters"
         
+        if priority not in ["low", "medium", "high"]:
+            return None, "priority must be 'low', 'medium', or 'high'"
+        
         if assigned_to is not None and not isinstance(assigned_to, int):
             return None, "assigned_to must be a user ID (integer)"
         
-        return CreateTaskRequest(title=title, description=description, assigned_to=assigned_to), None
+        return CreateTaskRequest(
+            title=title, 
+            description=description, 
+            priority=priority,
+            due_date=due_date,
+            assigned_to=assigned_to
+        ), None
 
 
 @dataclass
@@ -169,6 +182,8 @@ class UpdateTaskRequest:
     title: Optional[str]
     description: Optional[str]
     status: Optional[str]
+    priority: Optional[str]
+    due_date: Optional[str]
     assigned_to: Optional[int]
     
     @staticmethod
@@ -180,6 +195,8 @@ class UpdateTaskRequest:
         title = data.get("title")
         description = data.get("description")
         status = data.get("status")
+        priority = data.get("priority")
+        due_date = data.get("due_date")
         assigned_to = data.get("assigned_to")
         
         # All fields optional
@@ -200,10 +217,22 @@ class UpdateTaskRequest:
             if status not in ["todo", "in_progress", "done"]:
                 return None, "status must be 'todo', 'in_progress', or 'done'"
         
+        if priority is not None:
+            priority = str(priority).strip().lower()
+            if priority not in ["low", "medium", "high"]:
+                return None, "priority must be 'low', 'medium', or 'high'"
+        
         if assigned_to is not None and not isinstance(assigned_to, int):
             return None, "assigned_to must be a user ID (integer)"
         
-        return UpdateTaskRequest(title=title, description=description, status=status, assigned_to=assigned_to), None
+        return UpdateTaskRequest(
+            title=title, 
+            description=description, 
+            status=status, 
+            priority=priority,
+            due_date=due_date,
+            assigned_to=assigned_to
+        ), None
 
 
 @dataclass
@@ -279,6 +308,8 @@ def task_to_dict(task, include_comments: bool = False) -> Dict[str, Any]:
         "title": task.title,
         "description": task.description,
         "status": task.status,
+        "priority": task.priority,
+        "due_date": task.due_date.isoformat() if task.due_date else None,
         "assigned_to": task.assigned_to,
         "created_by": task.created_by,
         "created_at": task.created_at.isoformat(),

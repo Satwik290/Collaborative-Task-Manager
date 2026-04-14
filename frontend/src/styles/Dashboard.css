@@ -9,9 +9,9 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid var(--border-subtle);
-  background: rgba(2, 6, 23, 0.8);
-  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--border-main);
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
   position: sticky;
   top: 0;
   z-index: 100;

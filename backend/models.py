@@ -82,14 +82,17 @@ class Task(Base):
     title = Column(String(255), nullable=False)
     description = Column(String(2000), nullable=True)
     status = Column(String(20), nullable=False, default="todo")
+    priority = Column(String(20), nullable=False, default="medium")
+    due_date = Column(DateTime, nullable=True)
     assigned_to = Column(Integer, ForeignKey("users.id", ondelete="SET NULL"), nullable=True)
     created_by = Column(Integer, ForeignKey("users.id", ondelete="CASCADE"), nullable=False)
     created_at = Column(DateTime, default=datetime.utcnow, nullable=False)
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow, nullable=False)
     
-    # Constraint: status must be valid enum value
+    # Constraints
     __table_args__ = (
         CheckConstraint("status IN ('todo', 'in_progress', 'done')", name="valid_task_status"),
+        CheckConstraint("priority IN ('low', 'medium', 'high')", name="valid_task_priority"),
     )
     
     # Relationships

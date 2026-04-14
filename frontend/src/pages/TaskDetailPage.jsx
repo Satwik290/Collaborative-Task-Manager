@@ -47,19 +47,14 @@ export default function TaskDetailPage() {
     }
   };
 
-  const handleUpdateStatus = async (newStatus) => {
-    setUpdatingStatus(newStatus);
+  const handleUpdateTask = async (updates) => {
     try {
-      const response = await tasks.update(workspaceId, taskId, {
-        status: newStatus,
-      });
+      const response = await tasks.update(workspaceId, taskId, updates);
       if (response.data.success) {
-        setTask({ ...task, status: newStatus });
+        setTask({ ...task, ...updates });
       }
     } catch (err) {
       setError(err.response?.data?.error || 'Failed to update task');
-    } finally {
-      setUpdatingStatus(null);
     }
   };
 
@@ -80,44 +75,96 @@ export default function TaskDetailPage() {
     <div className="task-detail-page">
       <div className="task-detail-container glass-card">
         <div className="task-detail-header">
-          <button onClick={() => navigate(`/workspace/${workspaceId}`)} className="back-btn transition-all">
-            ← Back to Workspace
-          </button>
-          <h1>{task?.title}</h1>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
+            <button onClick={() => navigate(`/workspace/${workspaceId}`)} className="back-btn transition-all">
+              ← Workspace
+            </button>
+            <span style={{ 
+              background: 'var(--bg-surface-elevated)', 
+              padding: '4px 12px', 
+              borderRadius: '20px',
+              fontSize: '0.8rem',
+              color: 'var(--text-muted)'
+            }}>ID: #{taskId}</span>
+          </div>
+          <input 
+            value={task?.title || ''} 
+            onChange={(e) => handleUpdateTask({ title: e.target.value })}
+            placeholder="Task Title"
+            style={{ 
+              fontSize: '2rem', 
+              fontWeight: '700', 
+              background: 'transparent', 
+              border: 'none',
+              width: '100%',
+              marginBottom: '1rem',
+              color: 'var(--text-primary)',
+              outline: 'none'
+            }}
+          />
           {error && <div className="error-message" style={{ marginTop: '1rem' }}>{error}</div>}
         </div>
 
         <div className="task-info-grid">
           <div className="info-item">
-            <label>Current Status</label>
-            <p style={{ textTransform: 'capitalize', color: `var(--accent-${task?.status === 'done' ? 'success' : task?.status === 'in_progress' ? 'warning' : 'primary'})` }}>
-              {task?.status?.replace('_', ' ')}
-            </p>
-          </div>
-          <div className="info-item">
-            <label>Timeline</label>
-            <p>{new Date(task?.created_at).toLocaleDateString()}</p>
-          </div>
-          <div className="info-item">
-            <label>Actions</label>
+            <label>Status</label>
             <select
               className="transition-all"
               value={task?.status}
-              onChange={(e) => handleUpdateStatus(e.target.value)}
-              disabled={updatingStatus}
+              onChange={(e) => handleUpdateTask({ status: e.target.value })}
             >
               <option value="todo">To Do</option>
               <option value="in_progress">In Progress</option>
               <option value="done">Done</option>
             </select>
           </div>
+          <div className="info-item">
+            <label>Priority</label>
+            <select
+              className="transition-all"
+              value={task?.priority}
+              onChange={(e) => handleUpdateTask({ priority: e.target.value })}
+            >
+              <option value="low">Low</option>
+              <option value="medium">Medium</option>
+              <option value="high">High</option>
+            </select>
+          </div>
+          <div className="info-item">
+            <label>Due Date</label>
+            <input 
+              type="date"
+              className="transition-all"
+              value={task?.due_date ? task.due_date.split('T')[0] : ''}
+              onChange={(e) => handleUpdateTask({ due_date: e.target.value })}
+              style={{ background: 'var(--bg-surface)', border: '1px solid var(--border-main)' }}
+            />
+          </div>
+          <div className="info-item">
+            <label>Created On</label>
+            <p>{new Date(task?.created_at).toLocaleDateString()}</p>
+          </div>
         </div>
 
         <div className="description-section">
           <h3>Description</h3>
-          <div className="description-box glass">
-            {task?.description || <span style={{ color: 'var(--text-muted)' }}>No description provided for this task.</span>}
-          </div>
+          <textarea
+            className="description-box glass transition-all"
+            value={task?.description || ''}
+            onChange={(e) => handleUpdateTask({ description: e.target.value })}
+            placeholder="Add a detailed description..."
+            rows="5"
+            style={{ 
+              width: '100%', 
+              background: 'var(--bg-surface-elevated)', 
+              color: 'var(--text-primary)',
+              border: '1px solid var(--border-main)',
+              borderRadius: 'var(--radius-md)',
+              padding: '1rem',
+              resize: 'vertical',
+              fontSize: '1rem'
+            }}
+          />
         </div>
 
         <div className="comments-section">

@@ -30,6 +30,10 @@ def create_app(config: dict = None) -> Flask:
     # CORS
     CORS(app, resources={r"/api/*": {"origins": ["http://localhost:3000", "http://127.0.0.1:3000"]}}, supports_credentials=True)
     
+    # Initialize DB
+    from database import init_db, get_database_url
+    init_db(get_database_url())
+    
     # Register blueprints
     from routes.auth import auth_bp
     from routes.workspaces import workspaces_bp

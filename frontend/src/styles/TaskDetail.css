@@ -10,6 +10,10 @@
   width: 100%;
   max-width: 800px;
   padding: 3rem;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-main);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-xl);
 }
 
 .task-detail-header {

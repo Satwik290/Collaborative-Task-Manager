@@ -60,13 +60,6 @@ export default function DashboardPage() {
 
   return (
     <div className="dashboard-page">
-      <div className="dashboard-header">
-        <h1>TaskCollab</h1>
-        <button onClick={handleLogout} className="logout-btn">
-          Logout
-        </button>
-      </div>
-
       <div className="dashboard-content">
         <div className="create-workspace glass-card">
           <h2>Create a Workspace</h2>

@@ -71,7 +71,8 @@ def create_task(user_id, workspace_id):
     
     # Create task
     task, error = TaskService.create_task(
-        db, workspace_id, user_id, req.title, req.description, req.assigned_to
+        db, workspace_id, user_id, 
+        req.title, req.description, req.priority, req.due_date, req.assigned_to
     )
     db.close()
     
@@ -141,7 +142,8 @@ def update_task(user_id, workspace_id, task_id):
     
     # Update task
     updated_task, error = TaskService.update_task(
-        db, task_id, req.title, req.description, req.status, req.assigned_to
+        db, task_id, req.title, req.description, req.status, 
+        req.priority, req.due_date, req.assigned_to
     )
     db.close()
     

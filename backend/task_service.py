@@ -3,6 +3,7 @@ Task service.
 Business logic for task CRUD operations.
 """
 
+from datetime import datetime
 from typing import Optional, List, Tuple
 from sqlalchemy.orm import Session
 from models import Task, TaskComment, WorkspaceMember
@@ -21,6 +22,8 @@ class TaskService:
         created_by: int,
         title: str,
         description: Optional[str] = None,
+        priority: str = "medium",
+        due_date: Optional[str] = None,
         assigned_to: Optional[int] = None
     ) -> Tuple[Optional[Task], Optional[str]]:
         """
@@ -50,11 +53,21 @@ class TaskService:
                 if not member:
                     return None, "Assigned user is not member of this workspace"
             
+            # Parse due_date
+            parsed_due_date = None
+            if due_date:
+                try:
+                    parsed_due_date = datetime.fromisoformat(due_date.replace('Z', '+00:00'))
+                except ValueError:
+                    return None, "Invalid due_date format (ISO 8601 expected)"
+            
             task = Task(
                 workspace_id=workspace_id,
                 created_by=created_by,
                 title=title,
                 description=description,
+                priority=priority,
+                due_date=parsed_due_date,
                 assigned_to=assigned_to,
                 status="todo"
             )
@@ -99,6 +112,8 @@ class TaskService:
         title: Optional[str] = None,
         description: Optional[str] = None,
         status: Optional[str] = None,
+        priority: Optional[str] = None,
+        due_date: Optional[str] = None,
         assigned_to: Optional[int] = None
     ) -> Tuple[Optional[Task], Optional[str]]:
         """
@@ -138,6 +153,16 @@ class TaskService:
                 task.description = description
             if status is not None:
                 task.status = status
+            if priority is not None:
+                task.priority = priority
+            if due_date is not None:
+                if due_date == "":
+                    task.due_date = None
+                else:
+                    try:
+                        task.due_date = datetime.fromisoformat(due_date.replace('Z', '+00:00'))
+                    except ValueError:
+                        return None, "Invalid due_date format (ISO 8601 expected)"
             if assigned_to is not None:
                 task.assigned_to = assigned_to
             

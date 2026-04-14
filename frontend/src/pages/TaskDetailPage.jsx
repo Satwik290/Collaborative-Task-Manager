@@ -78,83 +78,88 @@ export default function TaskDetailPage() {
 
   return (
     <div className="task-detail-page">
-      <div className="task-header">
-        <button onClick={() => navigate(`/workspace/${workspaceId}`)} className="back-btn">
-          ← Back
-        </button>
-        <h1>{task?.title}</h1>
-      </div>
+      <div className="task-detail-container glass-card">
+        <div className="task-detail-header">
+          <button onClick={() => navigate(`/workspace/${workspaceId}`)} className="back-btn transition-all">
+            ← Back to Workspace
+          </button>
+          <h1>{task?.title}</h1>
+          {error && <div className="error-message" style={{ marginTop: '1rem' }}>{error}</div>}
+        </div>
 
-      <div className="task-content">
-        {error && <div className="error-message">{error}</div>}
-
-        <div className="task-main">
-          <div className="task-details">
-            <div className="detail-group">
-              <label>Status</label>
-              <div className="status-controls">
-                {['todo', 'in_progress', 'done'].map((status) => (
-                  <button
-                    key={status}
-                    onClick={() => handleUpdateStatus(status)}
-                    disabled={updatingStatus === status}
-                    className={`status-btn ${task?.status === status ? 'active' : ''}`}
-                  >
-                    {status === 'todo' ? 'To Do' : status === 'in_progress' ? 'In Progress' : 'Done'}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            {task?.description && (
-              <div className="detail-group">
-                <label>Description</label>
-                <p>{task.description}</p>
-              </div>
-            )}
-
-            <div className="detail-group">
-              <label>Created</label>
-              <p>{new Date(task?.created_at).toLocaleString()}</p>
-            </div>
+        <div className="task-info-grid">
+          <div className="info-item">
+            <label>Current Status</label>
+            <p style={{ textTransform: 'capitalize', color: `var(--accent-${task?.status === 'done' ? 'success' : task?.status === 'in_progress' ? 'warning' : 'primary'})` }}>
+              {task?.status?.replace('_', ' ')}
+            </p>
           </div>
-
-          <div className="task-comments">
-            <h3>Comments ({commentList.length})</h3>
-
-            <form onSubmit={handleAddComment} className="comment-form">
-              <textarea
-                value={newComment}
-                onChange={(e) => setNewComment(e.target.value)}
-                placeholder="Add a comment..."
-                rows="3"
-              />
-              <button type="submit">Comment</button>
-            </form>
-
-            {commentList.length === 0 ? (
-              <p className="empty-message">No comments yet.</p>
-            ) : (
-              <div className="comments-list">
-                {commentList.map((comment) => (
-                  <div key={comment.id} className="comment-item">
-                    <div className="comment-header">
-                      <span className="comment-author">{comment.email}</span>
-                      <span className="comment-date">
-                        {new Date(comment.created_at).toLocaleString()}
-                      </span>
-                    </div>
-                    <p>{comment.content}</p>
-                  </div>
-                ))}
-              </div>
-            )}
+          <div className="info-item">
+            <label>Timeline</label>
+            <p>{new Date(task?.created_at).toLocaleDateString()}</p>
+          </div>
+          <div className="info-item">
+            <label>Actions</label>
+            <select
+              className="transition-all"
+              value={task?.status}
+              onChange={(e) => handleUpdateStatus(e.target.value)}
+              disabled={updatingStatus}
+            >
+              <option value="todo">To Do</option>
+              <option value="in_progress">In Progress</option>
+              <option value="done">Done</option>
+            </select>
           </div>
         </div>
 
-        <button onClick={handleDeleteTask} className="delete-btn">
-          Delete Task
-        </button>
+        <div className="description-section">
+          <h3>Description</h3>
+          <div className="description-box glass">
+            {task?.description || <span style={{ color: 'var(--text-muted)' }}>No description provided for this task.</span>}
+          </div>
+        </div>
+
+        <div className="comments-section">
+          <h3>Discussion ({commentList.length})</h3>
+
+          <form onSubmit={handleAddComment} className="comment-form">
+            <textarea
+              className="transition-all"
+              value={newComment}
+              onChange={(e) => setNewComment(e.target.value)}
+              placeholder="Write a message..."
+              rows="3"
+            />
+            <button type="submit" className="transition-all">Post Comment</button>
+          </form>
+
+          {commentList.length === 0 ? (
+            <p className="empty-message glass" style={{ borderStyle: 'solid', padding: '2rem' }}>
+              No comments yet. Start the conversation!
+            </p>
+          ) : (
+            <div className="comments-list">
+              {commentList.map((comment) => (
+                <div key={comment.id} className="comment-item glass transition-all">
+                  <div className="comment-meta">
+                    <span className="comment-author">{comment.email}</span>
+                    <span className="comment-date">
+                      {new Date(comment.created_at).toLocaleDateString()}
+                    </span>
+                  </div>
+                  <div className="comment-content">{comment.content}</div>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+
+        <div style={{ marginTop: '4rem', paddingTop: '2rem', borderTop: '1px solid var(--border-subtle)' }}>
+          <button onClick={handleDeleteTask} className="logout-btn transition-all" style={{ padding: '0.75rem 1.5rem' }}>
+            Delete Permanently
+          </button>
+        </div>
       </div>
     </div>
   );

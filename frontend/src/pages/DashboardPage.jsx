@@ -68,19 +68,20 @@ export default function DashboardPage() {
       </div>
 
       <div className="dashboard-content">
-        <div className="create-workspace">
+        <div className="create-workspace glass-card">
           <h2>Create a Workspace</h2>
           <form onSubmit={handleCreateWorkspace}>
             {error && <div className="error-message">{error}</div>}
             <input
               type="text"
               value={newWorkspaceName}
+              className="transition-all"
               onChange={(e) => setNewWorkspaceName(e.target.value)}
               placeholder="Workspace name..."
               required
             />
-            <button type="submit" disabled={creating}>
-              {creating ? 'Creating...' : 'Create'}
+            <button type="submit" className="transition-all" disabled={creating}>
+              {creating ? 'Creating...' : 'Create Workspace'}
             </button>
           </form>
         </div>
@@ -88,19 +89,23 @@ export default function DashboardPage() {
         <div className="workspaces-section">
           <h2>Your Workspaces</h2>
           {loading ? (
-            <p>Loading...</p>
+            <p>Loading workspaces...</p>
           ) : workspaceList.length === 0 ? (
-            <p className="empty-message">No workspaces yet. Create one above!</p>
+            <div className="empty-message glass">
+              <p>No workspaces yet. Create one above to get started!</p>
+            </div>
           ) : (
             <div className="workspaces-grid">
               {workspaceList.map((ws) => (
                 <div
                   key={ws.id}
-                  className="workspace-card"
+                  className="workspace-card glass-card"
                   onClick={() => navigate(`/workspace/${ws.id}`)}
                 >
-                  <h3>{ws.name}</h3>
-                  <p>{new Date(ws.created_at).toLocaleDateString()}</p>
+                  <div>
+                    <h3>{ws.name}</h3>
+                    <p>Created on {new Date(ws.created_at).toLocaleDateString()}</p>
+                  </div>
                 </div>
               ))}
             </div>

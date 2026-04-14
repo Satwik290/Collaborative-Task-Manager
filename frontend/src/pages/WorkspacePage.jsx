@@ -92,121 +92,119 @@ export default function WorkspacePage() {
   return (
     <div className="workspace-page">
       <div className="workspace-header">
-        <button onClick={() => navigate('/')} className="back-btn">
-          ← Back
+        <button onClick={() => navigate('/')} className="back-btn transition-all">
+          ← Back to Dashboard
         </button>
         <h1>{workspace?.name || 'Workspace'}</h1>
+        <div style={{ width: '150px' }}></div> {/* Spacer for symmetry */}
       </div>
 
-      <div className="workspace-content">
-        {error && <div className="error-message">{error}</div>}
+      <div className="workspace-grid">
+        <div className="tasks-section glass">
+          <h2>
+            <span>📋</span> Tasks
+            {error && <span className="error-message" style={{ margin: 0, padding: '2px 8px', fontSize: '12px' }}>{error}</span>}
+          </h2>
 
-        <div className="workspace-grid">
-          <div className="tasks-section">
-            <h2>Tasks</h2>
+          <form onSubmit={handleCreateTask} className="create-task-form">
+            <input
+              type="text"
+              value={newTaskTitle}
+              className="transition-all"
+              onChange={(e) => setNewTaskTitle(e.target.value)}
+              placeholder="What needs to be done?"
+              required
+            />
+            <button type="submit" className="transition-all">Add Task</button>
+          </form>
 
-            <form onSubmit={handleCreateTask} className="create-task-form">
-              <input
-                type="text"
-                value={newTaskTitle}
-                onChange={(e) => setNewTaskTitle(e.target.value)}
-                placeholder="Create a new task..."
-                required
-              />
-              <button type="submit">Add Task</button>
-            </form>
-
-            {taskList.length === 0 ? (
-              <p className="empty-message">No tasks yet.</p>
-            ) : (
-              <div className="tasks-list">
-                {taskList.map((task) => (
-                  <div key={task.id} className={`task-item status-${task.status}`}>
-                    <div className="task-header">
-                      <h4>{task.title}</h4>
-                      <select
-                        value={task.status}
-                        onChange={(e) =>
-                          handleUpdateTaskStatus(task.id, e.target.value)
-                        }
-                      >
-                        <option value="todo">To Do</option>
-                        <option value="in_progress">In Progress</option>
-                        <option value="done">Done</option>
-                      </select>
-                    </div>
-                    {task.description && <p>{task.description}</p>}
-                    <div className="task-meta">
-                      {task.assigned_to && (
-                        <span className="assigned-badge">Assigned</span>
-                      )}
-                    </div>
-                    <button
-                      onClick={() =>
-                        navigate(`/workspace/${id}/task/${task.id}`)
+          {taskList.length === 0 ? (
+            <div className="empty-message">
+              <p>No tasks yet. Create your first task above!</p>
+            </div>
+          ) : (
+            <div className="tasks-list">
+              {taskList.map((task) => (
+                <div key={task.id} className={`task-item glass-card status-${task.status}`}>
+                  <div className="task-header">
+                    <h4>{task.title}</h4>
+                    <select
+                      className="transition-all"
+                      value={task.status}
+                      onChange={(e) =>
+                        handleUpdateTaskStatus(task.id, e.target.value)
                       }
-                      className="view-task-btn"
                     >
-                      View Details
-                    </button>
+                      <option value="todo">To Do</option>
+                      <option value="in_progress">In Progress</option>
+                      <option value="done">Done</option>
+                    </select>
                   </div>
-                ))}
-              </div>
-            )}
-          </div>
-
-          <div className="team-section">
-            <h2>Team Members</h2>
-
-            {memberList.length > 0 && (
-              <div className="members-list">
-                {memberList.map((member) => (
-                  <div key={member.user_id} className="member-item">
-                    <div>
-                      <p className="member-email">{member.email}</p>
-                      <p className="member-role">{member.role}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            )}
-
-            {!showInvite ? (
-              <button
-                onClick={() => setShowInvite(true)}
-                className="invite-btn"
-              >
-                + Invite Member
-              </button>
-            ) : (
-              <form onSubmit={handleInviteMember} className="invite-form">
-                <input
-                  type="email"
-                  value={inviteEmail}
-                  onChange={(e) => setInviteEmail(e.target.value)}
-                  placeholder="Email address"
-                  required
-                />
-                <select
-                  value={inviteRole}
-                  onChange={(e) => setInviteRole(e.target.value)}
-                >
-                  <option value="member">Member</option>
-                  <option value="admin">Admin</option>
-                </select>
-                <div className="form-buttons">
-                  <button type="submit">Invite</button>
+                  {task.description && <p>{task.description}</p>}
+                  
                   <button
-                    type="button"
-                    onClick={() => setShowInvite(false)}
-                    className="cancel-btn"
+                    onClick={() =>
+                      navigate(`/workspace/${id}/task/${task.id}`)
+                    }
+                    className="view-task-btn transition-all"
                   >
-                    Cancel
+                    View Details →
                   </button>
                 </div>
-              </form>
-            )}
+              ))}
+            </div>
+          )}
+        </div>
+
+        <div className="team-section glass">
+          <h2><span>👥</span> Team</h2>
+
+          <div className="members-list">
+            {memberList.map((member) => (
+              <div key={member.user_id} className="member-item transition-all">
+                <p className="member-email">{member.email}</p>
+                <p className="member-role">{member.role}</p>
+              </div>
+            ))}
           </div>
+
+          {!showInvite ? (
+            <button
+              onClick={() => setShowInvite(true)}
+              className="invite-btn transition-all"
+            >
+              + Invite Member
+            </button>
+          ) : (
+            <form onSubmit={handleInviteMember} className="invite-form glass-card">
+              <input
+                type="email"
+                value={inviteEmail}
+                className="transition-all"
+                onChange={(e) => setInviteEmail(e.target.value)}
+                placeholder="Member email"
+                required
+              />
+              <select
+                className="transition-all"
+                value={inviteRole}
+                onChange={(e) => setInviteRole(e.target.value)}
+              >
+                <option value="member">Member</option>
+                <option value="admin">Admin</option>
+              </select>
+              <div className="form-buttons">
+                <button type="submit" className="transition-all">Invite</button>
+                <button
+                  type="button"
+                  onClick={() => setShowInvite(false)}
+                  className="cancel-btn transition-all"
+                >
+                  Cancel
+                </button>
+              </div>
+            </form>
+          )}
         </div>
       </div>
     </div>

@@ -1,263 +1,204 @@
 .workspace-page {
   min-height: 100vh;
-  background: #f9fafb;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: var(--bg-main);
+  padding: 2rem;
 }
 
 .workspace-header {
-  background: white;
-  border-bottom: 1px solid #e5e7eb;
-  padding: 20px 40px;
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  gap: 20px;
+  margin-bottom: 2.5rem;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .back-btn {
-  padding: 8px 12px;
-  background: #f3f4f6;
-  border: 1px solid #d1d5db;
-  border-radius: 6px;
-  font-size: 14px;
-  font-weight: 600;
+  background: var(--bg-surface);
+  color: var(--text-secondary);
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius-md);
+  font-size: 0.875rem;
   cursor: pointer;
-  transition: background 0.2s;
-  white-space: nowrap;
+  border: 1px solid var(--border-subtle);
+  transition: all 0.2s;
 }
 
 .back-btn:hover {
-  background: #e5e7eb;
+  background: var(--bg-surface-elevated);
+  color: var(--text-primary);
 }
 
 .workspace-header h1 {
   margin: 0;
   font-size: 24px;
   font-weight: 700;
-  color: #1f2937;
-}
-
-.workspace-content {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 40px 20px;
+  color: var(--text-primary);
 }
 
 .workspace-grid {
   display: grid;
   grid-template-columns: 1fr 300px;
-  gap: 32px;
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
-.tasks-section {
-  background: white;
-  border-radius: 12px;
-  padding: 32px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+.tasks-section, .team-section {
+  background: var(--bg-surface);
+  border-radius: var(--radius-lg);
+  padding: 2rem;
+  border: 1px solid var(--border-subtle);
 }
 
-.tasks-section h2 {
-  margin: 0 0 24px 0;
-  font-size: 18px;
-  font-weight: 600;
-  color: #1f2937;
+.tasks-section h2, .team-section h2 {
+  font-size: 1.25rem;
+  margin-bottom: 1.5rem;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 .create-task-form {
   display: flex;
-  gap: 12px;
-  margin-bottom: 24px;
+  gap: 0.75rem;
+  margin-bottom: 2rem;
 }
 
 .create-task-form input {
   flex: 1;
-  padding: 11px 14px;
-  border: 1px solid #d1d5db;
-  border-radius: 6px;
-  font-size: 14px;
-  transition: border-color 0.2s;
-}
-
-.create-task-form input:focus {
-  outline: none;
-  border-color: #667eea;
-  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
 }
 
 .create-task-form button {
-  padding: 11px 18px;
-  background: #667eea;
+  background: var(--accent-primary);
   color: white;
-  border: none;
-  border-radius: 6px;
-  font-size: 14px;
+  padding: 0 1.5rem;
+  border-radius: var(--radius-md);
   font-weight: 600;
+  border: none;
   cursor: pointer;
-  white-space: nowrap;
-  transition: background 0.2s;
 }
 
 .create-task-form button:hover {
-  background: #5568d3;
+  background: var(--accent-primary-hover);
 }
 
 .tasks-list {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 1rem;
 }
 
 .task-item {
-  border: 1px solid #e5e7eb;
-  border-radius: 8px;
-  padding: 16px;
-  transition: border-color 0.2s, background 0.2s;
+  padding: 1.25rem;
+  border-left: 4px solid transparent;
+  background: var(--bg-surface-elevated);
+  border-radius: var(--radius-md);
+  transition: all 0.2s;
 }
 
-.task-item.status-done {
-  background: #f0fdf4;
-  border-color: #bbf7d0;
+.task-item:hover {
+  transform: translateX(4px);
+  border-color: var(--border-accent);
 }
 
 .task-header {
   display: flex;
   justify-content: space-between;
-  align-items: start;
-  margin-bottom: 12px;
-  gap: 16px;
+  align-items: flex-start;
+  margin-bottom: 0.75rem;
 }
 
 .task-header h4 {
+  font-size: 1rem;
+  color: var(--text-primary);
   margin: 0;
-  font-size: 15px;
-  font-weight: 600;
-  color: #1f2937;
-  flex: 1;
 }
 
 .task-header select {
-  padding: 6px 8px;
-  border: 1px solid #d1d5db;
-  border-radius: 4px;
-  font-size: 12px;
-  cursor: pointer;
-  white-space: nowrap;
-  background: white;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.75rem;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
 }
+
+.status-todo { border-left-color: var(--text-muted); }
+.status-in_progress { border-left-color: var(--accent-warning); }
+.status-done { border-left-color: var(--accent-success); }
 
 .task-item p {
-  margin: 0 0 8px 0;
-  font-size: 13px;
-  color: #6b7280;
-}
-
-.task-meta {
-  display: flex;
-  gap: 8px;
-  margin-bottom: 10px;
-}
-
-.assigned-badge {
-  display: inline-block;
-  padding: 4px 8px;
-  background: #dbeafe;
-  color: #0369a1;
-  border-radius: 4px;
-  font-size: 12px;
-  font-weight: 500;
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  margin: 0 0 1rem 0;
 }
 
 .view-task-btn {
-  padding: 6px 12px;
-  background: #f3f4f6;
-  border: 1px solid #d1d5db;
-  border-radius: 4px;
-  font-size: 12px;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--accent-primary);
+  background: transparent;
+  border: none;
   cursor: pointer;
-  transition: background 0.2s;
+  padding: 0;
 }
 
 .view-task-btn:hover {
-  background: #e5e7eb;
-}
-
-.team-section {
-  background: white;
-  border-radius: 12px;
-  padding: 32px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-  height: fit-content;
-}
-
-.team-section h2 {
-  margin: 0 0 20px 0;
-  font-size: 16px;
-  font-weight: 600;
-  color: #1f2937;
+  text-decoration: underline;
 }
 
 .members-list {
-  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
 }
 
 .member-item {
-  padding: 12px 0;
-  border-bottom: 1px solid #e5e7eb;
-}
-
-.member-item:last-child {
-  border-bottom: none;
+  padding: 1rem;
+  border-radius: var(--radius-lg);
+  background: var(--bg-surface-elevated);
+  border: 1px solid var(--border-subtle);
 }
 
 .member-email {
-  margin: 0;
-  font-size: 13px;
+  font-size: 0.875rem;
   font-weight: 500;
-  color: #1f2937;
+  color: var(--text-primary);
+  margin: 0;
 }
 
 .member-role {
-  margin: 4px 0 0 0;
-  font-size: 12px;
-  color: #9ca3af;
+  font-size: 0.75rem;
+  color: var(--text-muted);
   text-transform: capitalize;
+  margin: 0;
 }
 
 .invite-btn {
   width: 100%;
-  padding: 10px;
-  background: #667eea;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  font-size: 14px;
-  font-weight: 600;
+  padding: 0.75rem;
+  background: transparent;
+  border: 1px dashed var(--border-main);
+  color: var(--text-secondary);
+  border-radius: var(--radius-lg);
   cursor: pointer;
-  transition: background 0.2s;
 }
 
 .invite-btn:hover {
-  background: #5568d3;
+  border-color: var(--accent-primary);
+  color: var(--accent-primary);
 }
 
 .invite-form {
+  padding: 1.25rem;
+  border-radius: var(--radius-lg);
+  background: var(--bg-surface-elevated);
   display: flex;
   flex-direction: column;
-  gap: 12px;
-}
-
-.invite-form input,
-.invite-form select {
-  padding: 10px 12px;
-  border: 1px solid #d1d5db;
-  border-radius: 6px;
-  font-size: 13px;
-  font-family: inherit;
-}
-
-.invite-form input:focus,
-.invite-form select:focus {
-  outline: none;
-  border-color: #667eea;
+  gap: 1rem;
 }
 
 .form-buttons {
@@ -267,49 +208,50 @@
 
 .form-buttons button {
   flex: 1;
-  padding: 10px;
+  padding: 0.625rem;
   border: none;
-  border-radius: 6px;
-  font-size: 13px;
+  border-radius: var(--radius-md);
+  font-size: 0.875rem;
   font-weight: 600;
   cursor: pointer;
-  transition: background 0.2s;
+  transition: all 0.2s;
 }
 
 .form-buttons button[type='submit'] {
-  background: #667eea;
+  background: var(--accent-primary);
   color: white;
 }
 
 .form-buttons button[type='submit']:hover {
-  background: #5568d3;
+  background: var(--accent-primary-hover);
 }
 
 .cancel-btn {
-  background: #f3f4f6;
-  color: #1f2937;
-  border: 1px solid #d1d5db;
+  background: transparent;
+  color: var(--text-muted);
+  border: 1px solid var(--border-subtle);
 }
 
 .cancel-btn:hover {
-  background: #e5e7eb;
+  background: var(--bg-surface);
+  color: var(--text-primary);
 }
 
 .error-message {
-  padding: 12px 14px;
-  background: #fee2e2;
-  color: #991b1b;
-  border-radius: 6px;
-  font-size: 14px;
-  border-left: 3px solid #dc2626;
+  padding: 0.75rem 1rem;
+  background: rgba(239, 68, 68, 0.1);
+  color: var(--accent-danger);
+  border-radius: var(--radius-md);
+  font-size: 0.875rem;
+  border: 1px solid rgba(239, 68, 68, 0.2);
   margin-bottom: 20px;
 }
 
 .empty-message {
   text-align: center;
-  color: #9ca3af;
-  padding: 40px 20px;
-  font-size: 14px;
+  color: var(--text-muted);
+  padding: 2rem;
+  font-size: 0.875rem;
 }
 
 @media (max-width: 768px) {
@@ -319,5 +261,6 @@
 
   .task-header {
     flex-direction: column;
+    gap: 0.5rem;
   }
 }

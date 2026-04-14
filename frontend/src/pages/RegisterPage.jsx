@@ -43,9 +43,9 @@ export default function RegisterPage() {
 
   return (
     <div className="auth-page">
-      <div className="auth-container">
+      <div className="auth-container glass-card">
         <h1>TaskCollab</h1>
-        <p className="subtitle">Create an account</p>
+        <p className="subtitle">Join our collaborative community</p>
 
         <form onSubmit={handleSubmit}>
           {error && <div className="error-message">{error}</div>}

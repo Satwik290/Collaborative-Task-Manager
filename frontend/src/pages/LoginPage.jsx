@@ -34,9 +34,9 @@ export default function LoginPage() {
 
   return (
     <div className="auth-page">
-      <div className="auth-container">
+      <div className="auth-container glass-card">
         <h1>TaskCollab</h1>
-        <p className="subtitle">Collaborative task management</p>
+        <p className="subtitle">Sign in to your account</p>
 
         <form onSubmit={handleSubmit}>
           {error && <div className="error-message">{error}</div>}
@@ -63,8 +63,8 @@ export default function LoginPage() {
             />
           </div>
 
-          <button type="submit" disabled={loading}>
-            {loading ? 'Logging in...' : 'Login'}
+          <button type="submit" className="transition-all" disabled={loading}>
+            {loading ? 'Logging in...' : 'Sign In'}
           </button>
         </form>
 
